@@ -1,0 +1,1 @@
+map <buffer> <cr> o

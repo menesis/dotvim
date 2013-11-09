@@ -1,3 +1,7 @@
+" ~/.vimrc by Gediminas Paulauskas <menesis@pov.lt>, heavily based on
+" ~/.vimrc by Marius Gedminas <marius@gedmin.as>
+"
+
 "
 " Options                                                       {{{1
 "
@@ -10,7 +14,7 @@ set guioptions-=L               " disable left scrollbar in GUI
 set guioptions-=m               " disable GUI menu
 set showcmd                     " show partial commands in status line
 set ruler                       " show cursor position in status line
-set nolist                                  " do not show tabs and spaces at end of line
+set list                        " show tabs and spaces at end of line:
 set listchars=tab:>-,trail:.,extends:>
 if has("linebreak")
   let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
@@ -207,6 +211,7 @@ endif
 " read documentation at https://github.com/gmarik/vundle#readme
 if has("user_commands")
   set rtp+=~/.vim/bundle/vundle/
+  set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
   runtime autoload/vundle.vim " apparently without this the exists() check fails
 endif
 if exists("*vundle#rc")
@@ -245,10 +250,14 @@ if exists("*vundle#rc")
   "Bundle "fugitive.vim"
   Bundle "vcscommand.vim"
 
+  " Is too smart for its own good, makes completion worse, not better
+""Bundle "davidhalter/jedi-vim"
+
   Bundle "tpope/vim-characterize"
   Bundle "tpope/vim-surround"
-  Bundle "davidhalter/jedi-vim"
   Bundle "rhysd/clever-f.vim"
+
+  Bundle "Lokaltog/powerline"
 endif
 
 " Filetype plugins                                              {{{2
@@ -307,11 +316,29 @@ if has("eval")
 endif
 
 " python_check_syntax.vim                                       {{{2
-" mnemonic: py[f]lakes (the default \cs is taken by VCSStatus)
-let g:pcs_hotkey = '<LocalLeader>f'
-" the default, so I can easily disable it when it turns out to be too
-" irritating---sadly the plugin only pays attention at load time
-let g:pcs_check_when_saving = '0'
+if has("eval")
+  " mnemonic: py[f]lakes (the default \cs is taken by VCSStatus)
+  let g:pcs_hotkey = '<LocalLeader>f'
+  let g:pcs_check_when_saving = 0  " I use syntastic now
+
+  if has("user_commands")
+    command! EnablePyflakesOnSave   let g:pcs_check_when_saving = 1
+    command! DisablePyflakesOnSave  exec 'py quickfix.maybeclose()'
+                                     \| let g:pcs_check_when_saving = 0
+  endif
+endif
+
+" py-test-runner.vim                                            {{{2
+
+map             ,t              :CopyTestUnderCursor<cr>
+
+if has("user_commands")
+  " :Co now expands to :CommandT, but I'm used to type it as a shortcut for
+  " :CopyTestUnderCursor
+  command! Co CopyTestUnderCursor
+  " :E is now ambiguous, but I'm used to it
+  command! E Explore
+endif
 
 " XML syntax folding                                            {{{2
 if has("eval")
@@ -358,7 +385,7 @@ endif
 if has("eval")
   " show_function_definition is a hack that modified your source buffer
   " and interacts badly with syntax highlighting
-  let g:jedi#show_call_signatures = "0"
+  let g:jedi#show_function_definition = "0"
   " I type 'import zope.component', I see 'import zope.interfacecomponent'
   " because jedi autocompletes the only zope subpackage it finds in
   " site-packages, unmindful about my virtualenvs/buildouts.
@@ -466,6 +493,12 @@ command! Diffoff                        diffoff | setlocal nowrap
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
                   \ | wincmd p | diffthis
 
+" :CW                                                           {{{2
+command! CW             botright cw
+
+" :W is something I accidentally type all the time              {{{2
+command! W              w
+
 " :NoLCD                                                        {{{2
 command! NoLCD          exe 'cd '.getcwd()
 
@@ -478,6 +511,24 @@ endif " has("user_commands")
 " Ctrl-L updates diff, recomputes folds                         {{{2
 
 noremap         <C-L>           :diffupdate<CR>zx<C-L>
+
+" Ctrl-_ toggles the presence of _ in 'iskeyword'               {{{2
+
+if has("eval")
+  fun! ToggleUnderscoreInKeywords()
+    if &isk =~ '_'
+       set isk-=_
+       echo "_ is not a keyword character"
+    else
+        set isk+=_
+       echo "_ is a keyword character"
+    endif
+    return ''
+  endf
+endif
+
+noremap         <C-_>           :call ToggleUnderscoreInKeywords()<CR>
+inoremap        <C-_>           <C-R>=ToggleUnderscoreInKeywords()<CR>
 
 " Digraphs                                                      {{{2
 
@@ -502,6 +553,21 @@ inoremap <C-U> <C-G>u<C-U>
 " mode: you don't want u to undo the text you typed before you mispasted
 inoremap <MiddleMouse> <C-G>u<MiddleMouse>
 
+" */# search in visual mode (from www.vim.org)                  {{{2
+
+" Atom \V sets following pattern to "very nomagic", i.e. only the backslash
+" has special meaning.
+" As a search pattern we insert an expression (= register) that
+" calls the 'escape()' function on the unnamed register content '@@',
+" and escapes the backslash and the character that still has a special
+" meaning in the search command (/|?, respectively).
+" This works well even with <Tab> (no need to change ^I into \t),
+" but not with a linebreak, which must be changed from ^M to \n.
+" This is done with the substitute() function.
+" See http://vim.wikia.com/wiki/Search_for_visually_selected_text
+vnoremap * y/\V<C-R>=substitute(escape(@@,"/\\"),"\n","\\\\n","ge")<CR><CR>
+vnoremap # y?\V<C-R>=substitute(escape(@@,"?\\"),"\n","\\\\n","ge")<CR><CR>
+
 " Diffget/diffput in visual mode                                {{{2
 
 vmap            \do             :diffget<CR>
@@ -521,6 +587,9 @@ map <expr>      ,E              ":e ".expand("%:h")."/"
 ""map <expr>      ,,,E            ":e ".expand("%:h:h:h")."/"
 map <expr>      ,R              ":e ".expand("%:r")."."
 
+" close just the deepest level of folds                         {{{2
+map             ,zm             zMzRzm
+
 " Scrolling with Ctrl+Up/Down                                   {{{2
 map             <C-Up>          1<C-U>
 map             <C-Down>        1<C-D>
@@ -538,6 +607,20 @@ map             <S-Up>          {
 map             <S-Down>        }
 imap            <S-Up>          <C-O><S-Up>
 imap            <S-Down>        <C-O><S-Down>
+
+" Navigating around windows
+map             <C-W><C-Up>     <C-W><Up>
+map             <C-W><C-Down>   <C-W><Down>
+map             <C-W><C-Left>   <C-W><Left>
+map             <C-W><C-Right>  <C-W><Right>
+map             <C-S-Up>        <C-W><Up>
+map             <C-S-Down>      <C-W><Down>
+map             <C-S-Left>      <C-W><Left>
+map             <C-S-Right>     <C-W><Right>
+map!            <C-S-Up>        <C-O><C-W><Up>
+map!            <C-S-Down>      <C-O><C-W><Down>
+map!            <C-S-Left>      <C-O><C-W><Left>
+map!            <C-S-Right>     <C-O><C-W><Right>
 
 " Switching tabs with Alt-1,2,3 in gvim                         {{{2
 map             <A-1>           1gt
@@ -823,6 +906,20 @@ augroup JS_prog
   autocmd FileType javascript   map <buffer> <C-F6>  :SwitchCodeAndTest<CR>
 augroup END
 
+
+function! FT_Mako()
+  setf html
+  setlocal includeexpr=substitute(v:fname,'^/','','')
+  setlocal indentexpr=
+  setlocal indentkeys-={,}
+  map <buffer> <C-F6>  :SwitchCodeAndTest<CR>
+endf
+
+augroup Mako_templ
+  autocmd!
+  autocmd BufRead,BufNewFile *.mako     call FT_Mako()
+augroup END
+
 " Zope                                                          {{{2
 
 function! FT_XML()
@@ -964,14 +1061,28 @@ endif
 
 " My colour overrides
 
+highlight NonText               ctermfg=gray guifg=gray term=standout
+highlight SpecialKey            ctermfg=gray guifg=gray term=standout
+highlight MatchParen            gui=bold guibg=NONE guifg=lightblue cterm=bold ctermbg=255
+highlight SpellBad              cterm=underline ctermfg=red ctermbg=NONE
+highlight SpellCap              cterm=underline ctermfg=blue ctermbg=NONE
+
 " Make error messages more readable
-highlight ErrorMsg              guifg=white guibg=red ctermfg=white ctermbg=red
+highlight ErrorMsg              guifg=red guibg=white
+
+" Python doctests -- I got used to one color, then upgraded the Python
+" syntax script and it changed it
+highlight link Test Special
 
 " 'statusline' contains %1* and %2*
 highlight User1                 gui=NONE guifg=green guibg=black
             \                   cterm=NONE ctermfg=green ctermbg=black
 highlight User2                 gui=NONE guifg=magenta guibg=black
             \                   cterm=NONE ctermfg=magenta ctermbg=black
+
+" for custom :match commands
+highlight Red                   guibg=red ctermbg=red
+highlight Green                 guibg=green ctermbg=green
 
 " for less intrusive signs
 highlight SignColumn guibg=#fefefe ctermbg=230
