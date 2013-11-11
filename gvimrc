@@ -1,7 +1,9 @@
 "set guifont=Droid\ Sans\ Mono\ 9
-set guifont=Ubuntu\ Mono\ 10
+"set guifont=Ubuntu\ Mono\ 10
+set guifont=Source\ Code\ Pro\ 9
 set background=dark
-set guioptions=aegirTm
+"set guioptions=aegirTm
+set guioptions=aegrmc
 set lines=54 columns=107
 
 aunmenu ToolBar.Print

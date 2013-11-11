@@ -14,7 +14,7 @@ set guioptions-=L               " disable left scrollbar in GUI
 set guioptions-=m               " disable GUI menu
 set showcmd                     " show partial commands in status line
 set ruler                       " show cursor position in status line
-set list                        " show tabs and spaces at end of line:
+set nolist                      " do NOT show tabs and spaces at end of line:
 set listchars=tab:>-,trail:.,extends:>
 if has("linebreak")
   let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
@@ -132,9 +132,10 @@ set mousemodel=popup_setpos
 set report=3
 set secure
 set showmatch
+set noshowmode
 set smartcase
 set synmaxcol=300
-set notagbsearch
+"set notagbsearch
 set textwidth=80
 set winheight=3
 set winwidth=72
@@ -245,7 +246,7 @@ if exists("*vundle#rc")
   " ruby1.8-dev
 
   Bundle "scrooloose/syntastic"
-  "Bundle "Gundo"
+  Bundle "Gundo"
   "Bundle "Rename"
   "Bundle "fugitive.vim"
   Bundle "vcscommand.vim"
@@ -1050,10 +1051,10 @@ if has("gui_running")
 endif
 
 set background=dark
-"let psc_style='warm'
-"let psc_statement_different_from_type=1
-"colorscheme ps_color
-colorscheme xoria256
+let psc_style='warm'
+let psc_statement_different_from_type=1
+colorscheme ps_color
+"colorscheme xoria256
 
 if has("syntax")
   syntax enable
@@ -1063,7 +1064,7 @@ endif
 
 highlight NonText               ctermfg=gray guifg=gray term=standout
 highlight SpecialKey            ctermfg=gray guifg=gray term=standout
-highlight MatchParen            gui=bold guibg=NONE guifg=lightblue cterm=bold ctermbg=255
+"highlight MatchParen            gui=bold guibg=NONE guifg=lightblue cterm=bold ctermbg=255
 highlight SpellBad              cterm=underline ctermfg=red ctermbg=NONE
 highlight SpellCap              cterm=underline ctermfg=blue ctermbg=NONE
 
@@ -1085,7 +1086,8 @@ highlight Red                   guibg=red ctermbg=red
 highlight Green                 guibg=green ctermbg=green
 
 " for less intrusive signs
-highlight SignColumn guibg=#fefefe ctermbg=230
+highlight SignColumn guibg=NONE ctermbg=NONE
+"highlight SignColumn guibg=#fefefe ctermbg=230
 
 " avoid invisible color combination (red on red)
 highlight DiffText ctermbg=1

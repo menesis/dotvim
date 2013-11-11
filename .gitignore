@@ -2,3 +2,4 @@ backup
 tmp
 *.pyc
 bundle
+doc/tags
