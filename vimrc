@@ -120,6 +120,9 @@ set noshiftround                " do NOT enforce the indent
 set autoindent                  " automatic indent
 set nosmartindent               " but no smart indent (ain't smart enough)
 set isfname-=\=                 " fix filename completion in VAR=/path
+if v:version >= 704
+  set fo+=j                     " remove comment leader when joining lines
+endif
 
 " Other                                                         {{{2
 set gdefault
@@ -252,7 +255,7 @@ if exists("*vundle#rc")
   Bundle "vcscommand.vim"
 
   " Is too smart for its own good, makes completion worse, not better
-""Bundle "davidhalter/jedi-vim"
+  Bundle "davidhalter/jedi-vim"
 
   Bundle "tpope/vim-characterize"
   Bundle "tpope/vim-surround"
@@ -391,7 +394,7 @@ if has("eval")
   " because jedi autocompletes the only zope subpackage it finds in
   " site-packages, unmindful about my virtualenvs/buildouts.
   let g:jedi#popup_select_first = 0
-  "let g:jedi#popup_on_dot = 0
+  let g:jedi#popup_on_dot = 0
 endif
 
 "
@@ -431,19 +434,6 @@ if !exists("*SyntasticStatuslineFlag")
   endfunction
 endif
 
-if !exists("*haslocaldir")
-  function! HasLocalDir()
-    return ''
-  endfunction
-else
-  function! HasLocalDir()
-    if haslocaldir()
-      return '[lcd]'
-    endif
-    return ''
-  endfunction
-endif
-
 set statusline=                 " my status line contains:
 set statusline+=%n:             " - buffer number, followed by a colon
 set statusline+=%<%f            " - relative filename, truncated from the left
@@ -451,7 +441,6 @@ set statusline+=\               " - a space
 set statusline+=%h              " - [Help] if this is a help buffer
 set statusline+=%m              " - [+] if modified, [-] if not modifiable
 set statusline+=%r              " - [RO] if readonly
-set statusline+=%2*%{HasLocalDir()}%*           " [lcd] if :lcd has been used
 set statusline+=%#error#%{SyntasticStatuslineFlag()}%*
 set statusline+=\               " - a space
 set statusline+=%1*%{TagInStatusLine()}%*       " [current class/function]
@@ -499,9 +488,6 @@ command! CW             botright cw
 
 " :W is something I accidentally type all the time              {{{2
 command! W              w
-
-" :NoLCD                                                        {{{2
-command! NoLCD          exe 'cd '.getcwd()
 
 endif " has("user_commands")
 
@@ -1067,6 +1053,10 @@ highlight SpecialKey            ctermfg=gray guifg=gray term=standout
 "highlight MatchParen            gui=bold guibg=NONE guifg=lightblue cterm=bold ctermbg=255
 highlight SpellBad              cterm=underline ctermfg=red ctermbg=NONE
 highlight SpellCap              cterm=underline ctermfg=blue ctermbg=NONE
+
+" Get rid of italics (they look ugly)
+highlight htmlItalic            gui=NONE guifg=orange
+highlight htmlUnderlineItalic   gui=underline guifg=orange
 
 " Make error messages more readable
 highlight ErrorMsg              guifg=red guibg=white
