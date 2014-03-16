@@ -262,6 +262,8 @@ if exists("*vundle#rc")
   Bundle "rhysd/clever-f.vim"
 
   Bundle "Lokaltog/powerline"
+
+  Bundle "majutsushi/tagbar"
 endif
 
 " Filetype plugins                                              {{{2
@@ -384,6 +386,23 @@ if v:version >= 700 && has("eval")
   let g:NERDTreeIgnore = ['\.pyc$', '\~$']
   let g:NERDTreeHijackNetrw = 0
 endif
+
+" Tagbar                                                        {{{2
+"
+let g:tagbar_type_rst = {
+    \ 'ctagstype': 'rst',
+    \ 'ctagsbin' : '~/bin/rst2ctags',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+\ }
 
 " jedi.vim                                                      {{{2
 if has("eval")
@@ -687,10 +706,9 @@ imap            <S-F6>          <C-O><S-F6>
 map             <F7>            :ClipboardTest<CR>
 imap            <F7>            <C-O><F7>
 
-" <F8> = highlight identifier under cursor
+" <F8> = toggle tagbar
 " (some file-type dependent autocommands redefine it)
-map             <F8>            :let @/='\<'.expand('<cword>').'\>'<bar>set hls<CR>
-imap            <F8>            <C-O><F8>
+nmap            <F8>            :TagbarToggle<CR>
 
 " <F9> = make
 map             <F9>    :make<CR>
