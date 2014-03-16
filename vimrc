@@ -39,7 +39,7 @@ set t_vb=                       " don't beep! (but also see below)
 
 " Interpreting file contents                                    {{{2
 set modelines=5                 " debian disables this by default
-set fileencodings=ucs-bom,utf-8,windows-1252,iso-8859-13,latin1 " autodetect
+set fileencodings=ucs-bom,utf-8,iso-8859-13,latin1 " autodetect
         " Vim cannot distinguish between 8-bit encodings, so the last two
         " won't ever be considered.  I keep them here for convenience:
         " :set fencs=<tab>, then delete the ones you don't want
@@ -387,9 +387,9 @@ endif
 
 " jedi.vim                                                      {{{2
 if has("eval")
-  " show_function_definition is a hack that modified your source buffer
+  " show_call_signatures is a hack that modified your source buffer
   " and interacts badly with syntax highlighting
-  let g:jedi#show_function_definition = "0"
+  let g:jedi#show_call_signatures = "0"
   " I type 'import zope.component', I see 'import zope.interfacecomponent'
   " because jedi autocompletes the only zope subpackage it finds in
   " site-packages, unmindful about my virtualenvs/buildouts.
