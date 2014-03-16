@@ -433,19 +433,6 @@ endif
 " number of lines on the right.  Also, show the current Python function in the
 " status line, if the pythonhelper.vim plugin exists and can be loaded.
 
-runtime plugin/pythonhelper.vim
-runtime plugin/chelper.vim
-if !exists("*TagInStatusLine")
-  function TagInStatusLine()
-    return ''
-  endfunction
-endif
-if !exists("*CTagInStatusLine")
-  function CTagInStatusLine()
-    return ''
-  endfunction
-endif
-
 runtime plugin/syntastic.vim
 if !exists("*SyntasticStatuslineFlag")
   function! SyntasticStatuslineFlag()
@@ -461,9 +448,6 @@ set statusline+=%h              " - [Help] if this is a help buffer
 set statusline+=%m              " - [+] if modified, [-] if not modifiable
 set statusline+=%r              " - [RO] if readonly
 set statusline+=%#error#%{SyntasticStatuslineFlag()}%*
-set statusline+=\               " - a space
-set statusline+=%1*%{TagInStatusLine()}%*       " [current class/function]
-set statusline+=%1*%{CTagInStatusLine()}%*      " same but for C code
 set statusline+=\               " - a space
 set statusline+=%=              " - right-align the rest
 set statusline+=%-10.(%l,%c%V%) " - line,column[-virtual column]
