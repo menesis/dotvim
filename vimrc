@@ -241,6 +241,10 @@ if exists("*vundle#rc")
 
   Bundle "mgedmin/python-imports.vim"
 
+  " pure-python alternative to command-t, slightly different UI, seems quite
+  " good
+  Bundle "ctrlp.vim"
+
   Bundle "git://git.wincent.com/command-t.git"
   " NB: Bundle doesn't install command-t completely automatically; you have
   " to manually do this:
@@ -250,13 +254,13 @@ if exists("*vundle#rc")
 
   Bundle "scrooloose/syntastic"
   Bundle "Gundo"
-  "Bundle "Rename"
-  "Bundle "fugitive.vim"
+  Bundle "Rename"
   Bundle "vcscommand.vim"
 
-  " Is too smart for its own good, makes completion worse, not better
   Bundle "davidhalter/jedi-vim"
 
+  " Bundle "fugitive.vim" -- 2-years old version of tpope/vim-fugitive
+  Bundle "tpope/vim-fugitive"
   Bundle "tpope/vim-characterize"
   Bundle "tpope/vim-surround"
   Bundle "rhysd/clever-f.vim"
@@ -264,6 +268,7 @@ if exists("*vundle#rc")
   Bundle "Lokaltog/powerline"
 
   Bundle "majutsushi/tagbar"
+  Bundle "scrooloose/nerdtree"
 endif
 
 " Filetype plugins                                              {{{2
