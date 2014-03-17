@@ -356,7 +356,7 @@ if has("eval")
   let xml_syntax_folding = 1
 endif
 
-" XML tag complyetion                                           {{{2
+" XML tag completion                                           {{{2
 if has("eval")
   " because autocompleting when I type > is irritating half of the time
   let xml_tag_completion_map = "<C-l>"
@@ -483,6 +483,7 @@ command! NukeTrailingWhitespace         %s/\s\+$//
 
 " where's that non-ascii character?                             {{{2
 command! FindNonAscii                   normal /[^\x00-\x7f]<cr>
+command! FindControlChars               normal /[\x00-\x08\x0a-\x1f\x7f]<cr>
 
 " diffoff sets wrap; don't wanna                                {{{2
 command! Diffoff                        diffoff | setlocal nowrap
@@ -503,9 +504,9 @@ endif " has("user_commands")
 " Keyboard macros                                               {{{1
 "
 
-" Ctrl-L updates diff, recomputes folds                         {{{2
+" Ctrl-L loads changed files, updates diff, recomputes folds    {{{2
 
-noremap         <C-L>           :diffupdate<CR>zx<C-L>
+noremap         <C-L>           :checktime<bar>diffupdate<CR>zx<C-L>
 
 " Ctrl-_ toggles the presence of _ in 'iskeyword'               {{{2
 
@@ -633,6 +634,10 @@ cnoremap        <C-G>           <C-C>
 cnoremap        <C-A>           <Home>
 cnoremap        <Esc>b          <S-Left>
 cnoremap        <Esc>f          <S-Right>
+
+" Alt-Backspace deletes word backwards
+cnoremap        <M-BS>          <C-W>
+cnoremap        <Esc><BS>       <C-W>
 
 " Windows style editing                                         {{{2
 imap            <C-Del>         <C-O>dw
