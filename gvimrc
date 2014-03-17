@@ -2,8 +2,7 @@
 "set guifont=Ubuntu\ Mono\ 10
 set guifont=Source\ Code\ Pro\ 9
 set background=dark
-"set guioptions=aegirTm
-set guioptions=aegrmc
+set guioptions=acg
 set lines=54 columns=107
 
 aunmenu ToolBar.Print
