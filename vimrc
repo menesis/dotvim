@@ -643,7 +643,7 @@ cnoremap        <Esc><BS>       <C-W>
 imap            <C-Del>         <C-O>dw
 imap            <C-Backspace>   <C-O>db
 
-map             <S-Insert>      "+p
+map             <S-Insert>      "+P
 imap            <S-Insert>      <C-O><S-Insert>
 vmap            <C-Insert>      "+y
 
@@ -1071,17 +1071,11 @@ highlight htmlItalic            gui=NONE guifg=orange
 highlight htmlUnderlineItalic   gui=underline guifg=orange
 
 " Make error messages more readable
-highlight ErrorMsg              guifg=red guibg=white
+highlight ErrorMsg              guifg=red guibg=white ctermfg=red ctermbg=white
 
 " Python doctests -- I got used to one color, then upgraded the Python
 " syntax script and it changed it
 highlight link Test Special
-
-" 'statusline' contains %1* and %2*
-highlight User1                 gui=NONE guifg=green guibg=black
-            \                   cterm=NONE ctermfg=green ctermbg=black
-highlight User2                 gui=NONE guifg=magenta guibg=black
-            \                   cterm=NONE ctermfg=magenta ctermbg=black
 
 " for custom :match commands
 highlight Red                   guibg=red ctermbg=red
