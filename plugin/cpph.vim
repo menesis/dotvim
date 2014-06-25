@@ -2,7 +2,7 @@
 " cpph.vim - some VIM macros for editing C/C++ files
 " Copyright (c) 2001 Marius Gedminas <mgedmin@delfi.lt>
 "
-" $Id: cpph.vim 305 2009-03-04 17:11:02Z mg $
+" $Id$
 "
 
 " Variable g:cpph_default_ext is used when you are trying to call ToggleHeader

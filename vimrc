@@ -16,6 +16,12 @@ set showcmd                     " show partial commands in status line
 set ruler                       " show cursor position in status line
 set nolist                      " do NOT show tabs and spaces at end of line:
 set listchars=tab:>-,trail:.,extends:>
+if v:version >= 600
+  set listchars+=precedes:<
+endif
+if v:version >= 700
+  set listchars+=nbsp:_
+endif
 if has("linebreak")
   let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
 endif
@@ -23,13 +29,9 @@ if has("extra_search")
   set hlsearch                  " highlight search matches
   nohlsearch                    " but not initially
 endif
-
-if v:version >= 600
-  set listchars+=precedes:<
-endif
-
-if v:version >= 700
-  set listchars+=nbsp:_
+if v:version >= 703
+" set colorcolumn=81            " highlight column 81
+" let &colorcolumn=join(range(81,999),",") " and columns after that
 endif
 
 " Silence                                                       {{{2
@@ -95,7 +97,7 @@ endif
 
 " Input                                                         {{{2
 
-set timeoutlen=1000 ttimeoutlen=20 " timeout keys after 20ms, mappings after 3s
+set timeoutlen=1000 ttimeoutlen=20 " timeout keys after 20ms, mappings after 1s
                                 " doesn't seem to work for <esc>Ok
 
 " Movement                                                      {{{2
@@ -147,16 +149,19 @@ set winwidth=72
 set path+=**                    " let :find do recursive searches
 set tags-=./TAGS                " ignore emacs tags to prevent duplicates
 set tags-=TAGS                  " ignore emacs tags to prevent duplicates
-set tags-=./tags                " bin/tags is not a tags file;
+set tags-=./tags                " bin/tags is not a tags file
 set tags+=tags;$HOME            " look for tags in parent dirs
 set suffixes+=.class            " ignore Java class files
 set suffixes+=.pyc,.pyo         " ignore compiled Python files
+set suffixes+=.egg-info         " ignore compiled Python files
 set suffixes+=.~1~,.~2~         " ignore Bazaar droppings
 set wildignore+=*.pyc,*.pyo     " same as 'suffixes', but for tab completion
 set wildignore+=*.o,*.d,*.so    " same as 'suffixes', but for tab completion
+set wildignore+=*.egg-info/**   " same as 'suffixes', but for tab completion
 set wildignore+=*~              " same as 'suffixes', but for tab completion
 set wildignore+=local/**        " virtualenv
 set wildignore+=build/**        " distutils, I hates them
+set wildignore+=dist/**         " distutils deliverables
 set wildignore+=htmlcov/**      " coverage.py
 set wildignore+=coverage/**     " zope.testrunner --coverage
 set wildignore+=parts/omelette/** " collective.recipe.omelette
@@ -166,9 +171,11 @@ set wildignore+=eggs/**         " virtualenv
 set wildignore+=.tox/**         " tox
 set wildignore+=_build/**       " sphinx
 set wildignore+=python/**       " virtualenv called 'python'
+set wildignore+=__pycache__/**  " compiled python files
 
 if v:version >= 700
   set complete-=i               " don't autocomplete from included files (too slow)
+  set completeopt-=preview      " don't show the preview window
 endif
 
 " Python tracebacks (unittest + doctest output)                 {{{2
@@ -186,6 +193,7 @@ if has("eval")
   let g:is_posix = 1            " /bin/sh is POSIX, not ancient Bourne shell
   let g:sh_fold_enabled = 7     " fold functions, heredocs, ifs/loops
 endif
+
 " Persistent undo (vim 7.3+)                                    {{{2
 if has("persistent_undo")
   set undofile                  " enable persistent undo
@@ -202,7 +210,7 @@ if has("eval")
   let g:netrw_list_hide = '.*\.swp\($\|\t\),.*\.py[co]\($\|\t\)'
   let g:netrw_sort_sequence = '[\/]$,*,\.bak$,\.o$,\.h$,\.info$,\.swp$,\.obj$,\.py[co]$'
   let g:netrw_timefmt = '%Y-%m-%d %H:%M:%S'
-  let g:netrw_use_noswf = 1
+  let g:netrw_use_noswf = 1                     " this is default AFAIU so ?
 endif
 
 "
@@ -239,12 +247,22 @@ if exists("*vundle#rc")
   " search for new ones with :BundleSearch keyword
   " bundles are kept in ~/.vim/bundle/
 
+  " Show [current_function] in the status line for C files
+  Bundle "mgedmin/chelper.vim"
+
+  " Show [CurrentClass.current_method] in the status line for Python files
+  Bundle "mgedmin/pythonhelper.vim"
+
+  " Automate 'from X import Y' statements from ctags, bound to <F5>
   Bundle "mgedmin/python-imports.vim"
 
-  " pure-python alternative to command-t, slightly different UI, seems quite
-  " good
-  Bundle "ctrlp.vim"
+  " Better Python autoindentation
+  Bundle "hynek/vim-python-pep8-indent"
 
+  " Automate switching between code and unit test files, bound to <C-F6>
+  Bundle "mgedmin/test-switcher.vim"
+
+  " Open files by typing a subsequence of the pathname, bound to \t
   Bundle "git://git.wincent.com/command-t.git"
   " NB: Bundle doesn't install command-t completely automatically; you have
   " to manually do this:
@@ -252,16 +270,47 @@ if exists("*vundle#rc")
   " you might also need some packages installed, like build-essential and
   " ruby1.8-dev
 
+  " pure-python alternative to command-t, slightly different UI, not as nice
+  " to use as command-t but useful for some circumstances.  Bound to <C-P>
+  Bundle "ctrlp.vim"
+
+  " Show syntax errors and style warnings in files I edit.  Updates on save.
   Bundle "scrooloose/syntastic"
+
+  " Show ASCII-art representation of Vim's undo tree, with bonus unified diffs
   Bundle "Gundo"
+
+  " Defines the very useful :Rename newfilename.txt
   Bundle "Rename"
+
+  " Git integration -- :Gdiff, :Ggrep etc.
+  Bundle "tpope/vim-fugitive"
+  " Bundle "fugitive.vim" -- 2-years old version of tpope/vim-fugitive
+
+  " Version control integration for SVN and other legacy VCSes -- :VCSVimDiff
   Bundle "vcscommand.vim"
 
-  Bundle "davidhalter/jedi-vim"
+  " Show the svn diff while I'm editing an svn commit message.
+  Bundle "svn-diff.vim"
 
-  " Bundle "fugitive.vim" -- 2-years old version of tpope/vim-fugitive
-  Bundle "tpope/vim-fugitive"
+  " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
+  
+  " Smart omni-completion for everything.  I've disabled most of it because it
+  " was making my life actually harder instead of easier.
+  if v:version >= 704 || v:version == 703 && has("patch584")
+    " YouCompleteMe needs vim 7.3.584 or newer
+    Bundle "Valloric/YouCompleteMe"
+    " It needs extra install:
+    "   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
+  endif
+
+  " Smart omni-completion for Python
+  " Disabled because Is too smart for its own good, and makes completion
+  " worse, not better, for the codebases I work with.
+  " Also, YouCompleteMe subsumes it.
+""Bundle "davidhalter/jedi-vim"
+
   Bundle "tpope/vim-surround"
   Bundle "rhysd/clever-f.vim"
 
@@ -288,7 +337,7 @@ if has("eval")
   let g:syntastic_auto_loc_list = 2             " default is 2
   let g:syntastic_always_populate_loc_list = 1  " default is 0
 " let g:syntastic_quiet_warnings = 1
-" let g:syntastic_disabled_filetypes = ['ruby', 'php']
+  let g:syntastic_disabled_filetypes = ['java']
 
   " statusline format (default: '[Syntax: line:%F (%t)]')
   let g:syntastic_stl_format = '{%t}'
@@ -298,9 +347,10 @@ if has("eval")
   let g:syntastic_warning_symbol = '⚠'
 
   " For forcing the use of flake8, pyflakes, or pylint set
-" let g:syntastic_python_checker = 'pyflakes' " BBB
   let g:syntastic_python_checkers = ['pyflakes']
 " let g:syntastic_python_checkers = ['flake8']
+  let $PYFLAKES_DOCTEST = ''
+  let g:syntastic_javascript_checkers = ['jshint']
 endif
 
 " Command-t                                                     {{{2
@@ -309,6 +359,36 @@ if has("eval")
   let g:CommandTCursorEndMap = ['<C-e>', '<End>']
   let g:CommandTCursorStartMap = ['<C-a>', '<Home>']
   let g:CommandTMaxHeight = 20
+endif
+
+" bufexplorer.vim                                               {{{2
+
+if has("eval")
+  let g:bufExplorerShowRelativePath=1
+  let g:bufExplorerSplitOutPathName=0
+endif
+
+" YouCompleteMe                                                 {{{2
+
+if has("eval")
+  " auto-triggering breaks typing-then-<Up>/<Down> navigation in insert mode
+  " auto-triggering also breaks foo<C-p> completion
+  let g:ycm_auto_trigger = 0
+  " so I'm confused: I'd think I'd want this, but it appears to already
+  " detect my tags, despite the docs saying this is off by default?
+  " eh, maybe I had the right buffers open at that time.
+  " BTW apparently I need ctags --fields=+l for YCM to work
+  ""let g:ycm_collect_identifiers_from_tags_files = 1
+  " I hate when the preview window stays on screen
+  let g:ycm_autoclose_preview_window_after_completion = 1
+  " don't stomp on the <Tab> key dammit
+  let g:ycm_key_list_select_completion = ['<Down>']
+  let g:ycm_key_list_previous_completion = ['<Up>']
+endif
+
+" Manual pages (:Man foo)                                       {{{2
+if v:version >= 600
+  runtime ftplugin/man.vim
 endif
 
 " Toggle between .c (.cc, .cpp) and .h                          {{{2
@@ -347,8 +427,6 @@ if has("user_commands")
   " :Co now expands to :CommandT, but I'm used to type it as a shortcut for
   " :CopyTestUnderCursor
   command! Co CopyTestUnderCursor
-  " :E is now ambiguous, but I'm used to it
-  command! E Explore
 endif
 
 " XML syntax folding                                            {{{2
@@ -385,7 +463,7 @@ endif
 " make it not clobber 's' in visual mode
 vmap <Leader>s <Plug>Vsurround
 vmap <Leader>S <Plug>VSurround
- 
+
 " NERD_tree.vim                                                 {{{2
 if v:version >= 700 && has("eval")
   let g:NERDTreeIgnore = ['\.pyc$', '\~$']
@@ -475,6 +553,9 @@ set statusline+=%P              " - position in buffer as percentage
 
 if has("user_commands")
 
+" like :Explore, only never split windows                       {{{2
+command! E :e %:p:~:.:h
+
 " how many occurrences of the current search pattern?           {{{2
 command! CountMatches                   %s///n
 
@@ -509,6 +590,8 @@ endif " has("user_commands")
 noremap         <C-L>           :checktime<bar>diffupdate<CR>zx<C-L>
 
 " Ctrl-_ toggles the presence of _ in 'iskeyword'               {{{2
+" Sometimes this improves tab completion -- when I write a new
+" test and want to name it test_ClassName_methodname()
 
 if has("eval")
   fun! ToggleUnderscoreInKeywords()
@@ -564,6 +647,13 @@ inoremap <MiddleMouse> <C-G>u<MiddleMouse>
 vnoremap * y/\V<C-R>=substitute(escape(@@,"/\\"),"\n","\\\\n","ge")<CR><CR>
 vnoremap # y?\V<C-R>=substitute(escape(@@,"?\\"),"\n","\\\\n","ge")<CR><CR>
 
+" Sane 'all string' text object                                 {{{2
+
+omap            a'              2i'
+omap            a"              2i"
+vmap            a'              2i'
+vmap            a"              2i"
+
 " Diffget/diffput in visual mode                                {{{2
 
 vmap            \do             :diffget<CR>
@@ -579,8 +669,8 @@ map             ,s              :source $HOME/.vim/vimrc<CR>
 
 " open a file in the same dir as the current one                {{{2
 map <expr>      ,E              ":e ".expand("%:h")."/"
-""map <expr>      ,,E             ":e ".expand("%:h:h")."/"
-""map <expr>      ,,,E            ":e ".expand("%:h:h:h")."/"
+
+" open a file with same basename but different extension        {{{2
 map <expr>      ,R              ":e ".expand("%:r")."."
 
 " close just the deepest level of folds                         {{{2
@@ -632,12 +722,20 @@ map             <A-9>           9gt
 " Emacs style command line                                      {{{2
 cnoremap        <C-G>           <C-C>
 cnoremap        <C-A>           <Home>
+
+" Alt+b,f move word backwards/forwards
 cnoremap        <Esc>b          <S-Left>
 cnoremap        <Esc>f          <S-Right>
 
+" ^K deletes to end of line
+cnoremap        <C-K>   <C-\>estrpart(getcmdline(), 0, getcmdpos()-1)<CR>
+
 " Alt-Backspace deletes word backwards
-cnoremap        <M-BS>          <C-W>
+cnoremap        <A-BS>          <C-W>
 cnoremap        <Esc><BS>       <C-W>
+
+" Do not lose "complete all"
+cnoremap        <C-S-A>         <C-A>
 
 " Windows style editing                                         {{{2
 imap            <C-Del>         <C-O>dw
@@ -648,6 +746,7 @@ imap            <S-Insert>      <C-O><S-Insert>
 vmap            <C-Insert>      "+y
 
 " ^Z = undo
+" (works only in gvim, haven't used this in ages)
 imap            <C-Z>           <C-O>u
 
 " Function keys                                                 {{{2
@@ -899,12 +998,10 @@ augroup Python_prog
   "inoremap <C-space> <C-x><C-o>
 augroup END
 
-
 augroup JS_prog
   autocmd!
   autocmd FileType javascript   map <buffer> <C-F6>  :SwitchCodeAndTest<CR>
 augroup END
-
 
 function! FT_Mako()
   setf html
@@ -1028,7 +1125,6 @@ augroup RootsChangelog
   autocmd BufRead,BufNewFile /root/Changelog*   call FT_RootsChangelog()
 augroup END
 
-
 endif " has("autocmd")
 
 "
@@ -1049,7 +1145,7 @@ if has("gui_running")
 endif
 
 set background=dark
-let psc_style='warm'
+let psc_style='cool'
 let psc_statement_different_from_type=1
 colorscheme ps_color
 "colorscheme xoria256
@@ -1083,7 +1179,17 @@ highlight Green                 guibg=green ctermbg=green
 
 " for less intrusive signs
 highlight SignColumn guibg=NONE ctermbg=NONE
-"highlight SignColumn guibg=#fefefe ctermbg=230
+
+" gutter on the right of the text
+highlight ColorColumn ctermbg=230 guibg=#121212
+
+" gutter below the text
+"highlight NonText ctermbg=230
+"set shortmess+=I " suppress intro message because the above makes it look bad
+
+" cursor column
+highlight CursorColumn ctermbg=230
+highlight CursorLine ctermbg=230
 
 " avoid invisible color combination (red on red)
 highlight DiffText ctermbg=1
