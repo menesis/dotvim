@@ -1156,7 +1156,10 @@ highlight htmlItalic            gui=NONE guifg=orange
 highlight htmlUnderlineItalic   gui=underline guifg=orange
 
 " Make error messages more readable
-highlight ErrorMsg              guifg=red guibg=white ctermfg=red ctermbg=white
+"highlight ErrorMsg              guifg=red guibg=white ctermfg=red ctermbg=white
+
+" Make search highlight something else than red
+highlight Search                term=reverse cterm=bold ctermbg=1 guifg=#000000 guibg=#c0e080
 
 " Python doctests -- I got used to one color, then upgraded the Python
 " syntax script and it changed it
