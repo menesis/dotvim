@@ -336,6 +336,8 @@ if has("eval")
   " fun with unicode
   let g:syntastic_error_symbol = '⚡'
   let g:syntastic_warning_symbol = '⚠'
+  let g:syntastic_style_error_symbol = '⚡'
+  let g:syntastic_style_warning_symbol = '⚠'
 
   " For forcing the use of flake8, pyflakes, or pylint set
   let g:syntastic_python_checkers = ['pyflakes']
@@ -483,11 +485,9 @@ if has("eval")
   " show_call_signatures is a hack that modified your source buffer
   " and interacts badly with syntax highlighting
   let g:jedi#show_call_signatures = "0"
-  " I type 'import zope.component', I see 'import zope.interfacecomponent'
-  " because jedi autocompletes the only zope subpackage it finds in
-  " site-packages, unmindful about my virtualenvs/buildouts.
   let g:jedi#popup_select_first = 0
   let g:jedi#popup_on_dot = 0
+  let g:jedi#use_tabs_not_buffers = 0
 endif
 
 "
@@ -970,7 +970,7 @@ function! FT_Python()
     imap <buffer> <F5>   <C-O><F5>
     imap <buffer> <C-F5> <C-O><C-F5>
     map <buffer> <C-F6>  :SwitchCodeAndTest<CR>
-    map <buffer> <F9>    :SyntasticCheck<CR>
+    map <buffer> <F9>    :SyntasticToggleMode<CR>
     map <buffer> <F10>   :setlocal makeprg=pyflakes\ %\|make<CR>
   else
     set formatoptions=croql
@@ -985,8 +985,6 @@ augroup Python_prog
   autocmd!
   autocmd FileType python       call FT_Python()
   autocmd BufRead,BufNewFile *  if expand('%:p') =~ 'schooltool' | let g:pyTestRunnerClipboardExtras='-pvc1' | let g:pyTestRunnerDirectoryFiltering = '' | let g:pyTestRunnerModuleFiltering = '' | endif
-  "autocmd FileType python set omnifunc=pythoncomplete#Complete
-  "inoremap <C-space> <C-x><C-o>
 augroup END
 
 augroup JS_prog
