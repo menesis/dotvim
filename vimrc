@@ -296,20 +296,11 @@ if exists("*vundle#rc")
   " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
   
-  " Smart omni-completion for everything.  I've disabled most of it because it
-  " was making my life actually harder instead of easier.
-  if v:version >= 704 || v:version == 703 && has("patch584")
-    " YouCompleteMe needs vim 7.3.584 or newer
-    Bundle "Valloric/YouCompleteMe"
-    " It needs extra install:
-    "   cd ~/.vim/bundle/YouCompleteMe && ./install.sh
-  endif
-
   " Smart omni-completion for Python
   " Disabled because Is too smart for its own good, and makes completion
   " worse, not better, for the codebases I work with.
   " Also, YouCompleteMe subsumes it.
-""Bundle "davidhalter/jedi-vim"
+  Bundle "davidhalter/jedi-vim"
 
   Bundle "tpope/vim-surround"
   Bundle "rhysd/clever-f.vim"
