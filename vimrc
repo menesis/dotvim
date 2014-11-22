@@ -14,6 +14,7 @@ set guioptions-=L               " disable left scrollbar in GUI
 set guioptions-=m               " disable GUI menu
 set showcmd                     " show partial commands in status line
 set ruler                       " show cursor position in status line
+"set number                      " show line numbers
 set nolist                      " do NOT show tabs and spaces at end of line:
 set listchars=tab:>-,trail:.,extends:>
 if v:version >= 600
@@ -272,7 +273,7 @@ if exists("*vundle#rc")
 
   " pure-python alternative to command-t, slightly different UI, not as nice
   " to use as command-t but useful for some circumstances.  Bound to <C-P>
-  Bundle "ctrlp.vim"
+  "Bundle "ctrlp.vim"
 
   " Show syntax errors and style warnings in files I edit.  Updates on save.
   Bundle "scrooloose/syntastic"
@@ -285,7 +286,6 @@ if exists("*vundle#rc")
 
   " Git integration -- :Gdiff, :Ggrep etc.
   Bundle "tpope/vim-fugitive"
-  " Bundle "fugitive.vim" -- 2-years old version of tpope/vim-fugitive
 
   " Version control integration for SVN and other legacy VCSes -- :VCSVimDiff
   Bundle "vcscommand.vim"
@@ -297,18 +297,17 @@ if exists("*vundle#rc")
   Bundle "tpope/vim-characterize"
   
   " Smart omni-completion for Python
-  " Disabled because Is too smart for its own good, and makes completion
-  " worse, not better, for the codebases I work with.
-  " Also, YouCompleteMe subsumes it.
   Bundle "davidhalter/jedi-vim"
 
   Bundle "tpope/vim-surround"
   Bundle "rhysd/clever-f.vim"
 
-  Bundle "Lokaltog/powerline"
-
   Bundle "majutsushi/tagbar"
   Bundle "scrooloose/nerdtree"
+
+  Bundle "airblade/vim-gitgutter"
+
+  Bundle "Lokaltog/powerline"
 endif
 
 " Filetype plugins                                              {{{2
@@ -962,7 +961,7 @@ function! FT_Python()
     " I don't want [I to parse import statements and look for modules
     setlocal include=
 
-    syn sync minlines=100
+    syn sync minlines=300
 
 ""  match Error /\%>79v.\+/
     map <buffer> <F5>    :ImportName <C-R><C-W><CR>
@@ -1170,7 +1169,8 @@ highlight Red                   guibg=red ctermbg=red
 highlight Green                 guibg=green ctermbg=green
 
 " for less intrusive signs
-highlight SignColumn guibg=NONE ctermbg=NONE
+"highlight SignColumn guibg=NONE ctermbg=NONE
+highlight clear SignColumn
 
 " gutter on the right of the text
 highlight ColorColumn ctermbg=230 guibg=#121212
