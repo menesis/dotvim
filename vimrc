@@ -160,19 +160,20 @@ set wildignore+=*.pyc,*.pyo     " same as 'suffixes', but for tab completion
 set wildignore+=*.o,*.d,*.so    " same as 'suffixes', but for tab completion
 set wildignore+=*.egg-info/**   " same as 'suffixes', but for tab completion
 set wildignore+=*~              " same as 'suffixes', but for tab completion
-set wildignore+=local/**        " virtualenv
 set wildignore+=build/**        " distutils, I hates them
 set wildignore+=dist/**         " distutils deliverables
 set wildignore+=htmlcov/**      " coverage.py
 set wildignore+=coverage/**     " zope.testrunner --coverage
-set wildignore+=parts/omelette/** " collective.recipe.omelette
 set wildignore+=parts/**        " all buildout-generated junk even
 set wildignore+=lib/**          " virtualenv
 set wildignore+=eggs/**         " virtualenv
 set wildignore+=.tox/**         " tox
 set wildignore+=_build/**       " sphinx
+set wildignore+=env/**          " virtualenv called 'env'
 set wildignore+=python/**       " virtualenv called 'python'
 set wildignore+=__pycache__/**  " compiled python files
+set wildignore+=var/**          " data
+set wildignore+=instance/**     " data
 
 if v:version >= 700
   set complete-=i               " don't autocomplete from included files (too slow)
@@ -351,6 +352,7 @@ if has("eval")
   let g:CommandTCursorEndMap = ['<C-e>', '<End>']
   let g:CommandTCursorStartMap = ['<C-a>', '<Home>']
   let g:CommandTMaxHeight = 20
+  let g:CommandTFileScanner = 'git'
 endif
 
 " bufexplorer.vim                                               {{{2
@@ -1084,6 +1086,11 @@ augroup Diffs
   autocmd FileType diff                 call FT_Diff()
 augroup END
 
+augroup CSS
+  autocmd!
+  autocmd BufRead,BufNewFile *.less     setf scss
+augroup END
+
 function! FT_PO()
   if !hasmapto('<Plug>DeleteTrans')
     imap <buffer> <S-F4> <Plug>DeleteTrans
@@ -1158,7 +1165,7 @@ highlight htmlUnderlineItalic   gui=underline guifg=orange
 "highlight ErrorMsg              guifg=red guibg=white ctermfg=red ctermbg=white
 
 " Make search highlight something else than red
-highlight Search                term=reverse cterm=bold ctermbg=1 guifg=#000000 guibg=#c0e080
+highlight Search                term=reverse ctermbg=143 guifg=#000000 guibg=#c0e080
 
 " Python doctests -- I got used to one color, then upgraded the Python
 " syntax script and it changed it

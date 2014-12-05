@@ -26,7 +26,7 @@ changeset
 gettext
 json
 buildout
-Django
+django
 ORM
 mixin
 bugfix
@@ -57,7 +57,7 @@ zcml
 textarea
 svg
 screenshots
-Ubuntu
+ubuntu
 LTS
 ascii
 username
@@ -81,6 +81,7 @@ formset
 readonly
 autocompleted
 autocomplete
+autocompletes
 builtins
 dict
 fallback
