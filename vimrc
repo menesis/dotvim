@@ -294,6 +294,9 @@ if exists("*vundle#rc")
   " Show the svn diff while I'm editing an svn commit message.
   Bundle "svn-diff.vim"
 
+  " LESS (the CSS preprocessor) syntax
+  Bundle "groenewege/vim-less"
+
   " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
   
@@ -1084,11 +1087,6 @@ augroup Diffs
   autocmd!
   autocmd BufRead,BufNewFile *.patch    setf diff
   autocmd FileType diff                 call FT_Diff()
-augroup END
-
-augroup CSS
-  autocmd!
-  autocmd BufRead,BufNewFile *.less     setf scss
 augroup END
 
 function! FT_PO()
