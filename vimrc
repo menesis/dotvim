@@ -225,7 +225,7 @@ endif
 " read documentation at https://github.com/gmarik/vundle#readme
 if has("user_commands")
   set rtp+=~/.vim/bundle/vundle/
-  set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+  "set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
   runtime autoload/vundle.vim " apparently without this the exists() check fails
 endif
 if exists("*vundle#rc")
@@ -299,7 +299,7 @@ if exists("*vundle#rc")
 
   " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
-  
+
   " Smart omni-completion for Python
   Bundle "davidhalter/jedi-vim"
 
@@ -311,7 +311,13 @@ if exists("*vundle#rc")
 
   Bundle "airblade/vim-gitgutter"
 
-  Bundle "Lokaltog/powerline"
+  "Bundle "Lokaltog/powerline"
+  Bundle "bling/vim-airline"
+
+  "Bundle "croaker/mustang-vim"
+  "Bundle "baskerville/bubblegum"
+  Bundle "gosukiwi/vim-atom-dark"
+  Bundle "flazz/vim-colorschemes"
 endif
 
 " Filetype plugins                                              {{{2
@@ -511,29 +517,6 @@ endif
 " number of lines on the right.  Also, show the current Python function in the
 " status line, if the pythonhelper.vim plugin exists and can be loaded.
 
-runtime plugin/syntastic.vim
-if !exists("*SyntasticStatuslineFlag")
-  function! SyntasticStatuslineFlag()
-    return ''
-  endfunction
-endif
-
-set statusline=                 " my status line contains:
-set statusline+=%n:             " - buffer number, followed by a colon
-set statusline+=%<%f            " - relative filename, truncated from the left
-set statusline+=\               " - a space
-set statusline+=%h              " - [Help] if this is a help buffer
-set statusline+=%m              " - [+] if modified, [-] if not modifiable
-set statusline+=%r              " - [RO] if readonly
-set statusline+=%#error#%{SyntasticStatuslineFlag()}%*
-set statusline+=\               " - a space
-set statusline+=%=              " - right-align the rest
-set statusline+=%-10.(%l,%c%V%) " - line,column[-virtual column]
-set statusline+=\               " - a space
-set statusline+=%4L             " - total number of lines in buffer
-set statusline+=\               " - a space
-set statusline+=%P              " - position in buffer as percentage
-
 " Other notes:
 "   %1*         -- switch to highlight group User1
 "   %{}         -- embed the output of a vim function
@@ -541,6 +524,11 @@ set statusline+=%P              " - position in buffer as percentage
 "   %=          -- right-align the rest
 "   %-10.(...%) -- left-align the group inside %(...%)
 
+"
+" Airline                                                       {{{1
+"
+let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tabline#enabled = 1
 
 "
 " Commands                                                      {{{1
@@ -955,7 +943,7 @@ function! FT_Python()
       setlocal fo+=j " remove comment leader when joining lines
     endif
     setlocal shiftwidth=4
-    setlocal softtabstop=4 
+    setlocal softtabstop=4
     setlocal expandtab
     setlocal indentkeys-=<:>
     setlocal indentkeys-=:
@@ -1138,10 +1126,12 @@ if has("gui_running")
 endif
 
 set background=dark
-let psc_style='cool'
-let psc_statement_different_from_type=1
-colorscheme ps_color
-"colorscheme xoria256
+"let psc_style='cool'
+"let psc_statement_different_from_type=1
+"colorscheme ps_color
+colorscheme atom-dark-256
+let g:airline_theme="bubblegum"
+"AirlineTheme understated
 
 if has("syntax")
   syntax enable
@@ -1175,7 +1165,7 @@ highlight Green                 guibg=green ctermbg=green
 
 " for less intrusive signs
 "highlight SignColumn guibg=NONE ctermbg=NONE
-highlight clear SignColumn
+"highlight clear SignColumn
 
 " gutter on the right of the text
 highlight ColorColumn ctermbg=230 guibg=#121212
