@@ -1153,7 +1153,7 @@ highlight htmlUnderlineItalic   gui=underline guifg=orange
 "highlight ErrorMsg              guifg=red guibg=white ctermfg=red ctermbg=white
 
 " Make search highlight something else than red
-highlight Search                term=reverse ctermbg=143 guifg=#000000 guibg=#c0e080
+"highlight Search                term=reverse ctermbg=143 guifg=#000000 guibg=#c0e080
 
 " Python doctests -- I got used to one color, then upgraded the Python
 " syntax script and it changed it
@@ -1175,8 +1175,8 @@ highlight ColorColumn ctermbg=230 guibg=#121212
 "set shortmess+=I " suppress intro message because the above makes it look bad
 
 " cursor column
-highlight CursorColumn ctermbg=230
-highlight CursorLine ctermbg=230
+"highlight CursorColumn ctermbg=230
+"highlight CursorLine ctermbg=230
 
 " avoid invisible color combination (red on red)
 highlight DiffText ctermbg=1
