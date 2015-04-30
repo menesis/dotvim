@@ -489,6 +489,7 @@ let g:tagbar_type_rst = {
     \ },
     \ 'sort': 0,
 \ }
+let g:tagbar_expand = 1
 
 " jedi.vim                                                      {{{2
 if has("eval")
@@ -528,6 +529,7 @@ endif
 " Airline                                                       {{{1
 "
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#whitespace#enabled = 0
 "let g:airline#extensions#tabline#enabled = 1
 
 "
@@ -787,8 +789,9 @@ imap            <F7>            <C-O><F7>
 nmap            <F8>            :TagbarToggle<CR>
 
 " <F9> = make
-map             <F9>    :make<CR>
-imap            <F9>    <C-O><F9>
+map             <F9>            :NERDTreeToggle<CR>
+"map             <F9>    :make<CR>
+"imap            <F9>    <C-O><F9>
 
 " <F10> = quit
 " (some file-type dependent autocommands redefine it)
@@ -962,7 +965,8 @@ function! FT_Python()
     imap <buffer> <F5>   <C-O><F5>
     imap <buffer> <C-F5> <C-O><C-F5>
     map <buffer> <C-F6>  :SwitchCodeAndTest<CR>
-    map <buffer> <F9>    :SyntasticToggleMode<CR>
+    map <buffer> <F9>    :NERDTreeToggle<CR>
+    "map <buffer> <F9>    :SyntasticToggleMode<CR>
     map <buffer> <F10>   :setlocal makeprg=pyflakes\ %\|make<CR>
   else
     set formatoptions=croql
