@@ -10,6 +10,8 @@ set nocompatible                " be sane (default if you have a .vimrc)
 " Presentation                                                  {{{2
 set laststatus=2                " always show a status line
 set cmdheight=2                 " avoid 'Press ENTER to continue'
+set fillchars=vert:\ ,fold:⎯
+" disable pipe in vertical split borders
 set guioptions-=L               " disable left scrollbar in GUI
 set guioptions-=m               " disable GUI menu
 set showcmd                     " show partial commands in status line
@@ -311,8 +313,8 @@ if exists("*vundle#rc")
 
   Bundle "airblade/vim-gitgutter"
 
-  "Bundle "Lokaltog/powerline"
   Bundle "bling/vim-airline"
+  Bundle 'edkolev/promptline.vim'
 
   "Bundle "croaker/mustang-vim"
   "Bundle "baskerville/bubblegum"
@@ -489,7 +491,6 @@ let g:tagbar_type_rst = {
     \ },
     \ 'sort': 0,
 \ }
-let g:tagbar_expand = 1
 
 " jedi.vim                                                      {{{2
 if has("eval")
