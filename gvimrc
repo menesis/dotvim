@@ -1,6 +1,7 @@
 "set guifont=Droid\ Sans\ Mono\ 9
 "set guifont=Ubuntu\ Mono\ 10
-set guifont=Sauce\ Code\ Powerline\ 9
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
+"set guifont=Sauce\ Code\ Powerline\ 9
 set background=dark
 set guioptions=acg
 set lines=54 columns=107

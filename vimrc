@@ -315,11 +315,15 @@ if exists("*vundle#rc")
 
   Bundle "bling/vim-airline"
   Bundle 'edkolev/promptline.vim'
+  Bundle 'edkolev/tmuxline.vim'
 
   "Bundle "croaker/mustang-vim"
   "Bundle "baskerville/bubblegum"
   Bundle "gosukiwi/vim-atom-dark"
   Bundle "flazz/vim-colorschemes"
+
+  Bundle "vim-scripts/utl.vim"
+  Bundle "jceb/vim-orgmode"
 endif
 
 " Filetype plugins                                              {{{2
