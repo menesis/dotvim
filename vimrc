@@ -141,6 +141,8 @@ set report=3
 set secure
 set showmatch
 set noshowmode
+set nrformats-=octal
+set sessionoptions-=options
 set smartcase
 set synmaxcol=300
 "set notagbsearch
