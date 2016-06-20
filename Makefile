@@ -1,4 +1,4 @@
-all: bundle/vundle command-t
+all: bundle/vundle
 
 install bundle/command-t: bundle/vundle
 	vim +BundleInstall

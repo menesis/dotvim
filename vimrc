@@ -254,10 +254,10 @@ if exists("*vundle#rc")
   " bundles are kept in ~/.vim/bundle/
 
   " Show [current_function] in the status line for C files
-  Bundle "mgedmin/chelper.vim"
+  "Bundle "mgedmin/chelper.vim"
 
   " Show [CurrentClass.current_method] in the status line for Python files
-  Bundle "mgedmin/pythonhelper.vim"
+  "Bundle "mgedmin/pythonhelper.vim"
 
   " Automate 'from X import Y' statements from ctags, bound to <F5>
   Bundle "mgedmin/python-imports.vim"
@@ -269,7 +269,7 @@ if exists("*vundle#rc")
   Bundle "mgedmin/test-switcher.vim"
 
   " Open files by typing a subsequence of the pathname, bound to \t
-  Bundle "git://git.wincent.com/command-t.git"
+  "Bundle "git://git.wincent.com/command-t.git"
   " NB: Bundle doesn't install command-t completely automatically; you have
   " to manually do this:
   "   cd ~/.vim/bundle/command-t/ruby/command-t/ && ruby extconf.rb && make
@@ -278,7 +278,7 @@ if exists("*vundle#rc")
 
   " pure-python alternative to command-t, slightly different UI, not as nice
   " to use as command-t but useful for some circumstances.  Bound to <C-P>
-  "Bundle "ctrlp.vim"
+  Bundle "ctrlp.vim"
 
   " Show syntax errors and style warnings in files I edit.  Updates on save.
   Bundle "scrooloose/syntastic"
@@ -305,7 +305,7 @@ if exists("*vundle#rc")
   Bundle "tpope/vim-characterize"
 
   " Smart omni-completion for Python
-  Bundle "davidhalter/jedi-vim"
+  "Bundle "davidhalter/jedi-vim"
 
   Bundle "tpope/vim-surround"
   Bundle "rhysd/clever-f.vim"
@@ -315,7 +315,8 @@ if exists("*vundle#rc")
 
   Bundle "airblade/vim-gitgutter"
 
-  Bundle "bling/vim-airline"
+  Bundle "vim-airline/vim-airline"
+  Bundle "vim-airline/vim-airline-themes"
   Bundle 'edkolev/promptline.vim'
   Bundle 'edkolev/tmuxline.vim'
 
