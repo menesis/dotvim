@@ -335,7 +335,7 @@ if exists("*vundle#rc")
   Bundle "flazz/vim-colorschemes"
 
   Bundle "vim-scripts/utl.vim"
-  Bundle "jceb/vim-orgmode"
+  "Bundle "jceb/vim-orgmode"
 endif
 
 " Filetype plugins                                              {{{2
@@ -370,7 +370,8 @@ if has("eval")
   let g:syntastic_python_checkers = ['pyflakes']
 " let g:syntastic_python_checkers = ['flake8']
   let $PYFLAKES_DOCTEST = ''
-  let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_javascript_checkers = ['jshint']
+  let g:syntastic_javascript_checkers = ['eslint']
 endif
 
 " Command-t                                                     {{{2
@@ -561,6 +562,13 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#close_symbol = '✕'
+
+let g:promptline_preset = {
+        \'a' : [ promptline#slices#host() ],
+        \'b' : [ '$USER'],
+        \'c' : [ promptline#slices#cwd() ],
+        \'y' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
+        \'warn' : [ promptline#slices#last_exit_code() ]}
 
 "
 " Commands                                                      {{{1
