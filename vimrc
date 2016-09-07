@@ -257,7 +257,7 @@ if exists("*vundle#rc")
   "Bundle "mgedmin/chelper.vim"
 
   " Show [CurrentClass.current_method] in the status line for Python files
-  "Bundle "mgedmin/pythonhelper.vim"
+  Bundle "mgedmin/pythonhelper.vim"
 
   " Automate 'from X import Y' statements from ctags, bound to <F5>
   Bundle "mgedmin/python-imports.vim"
@@ -303,6 +303,15 @@ if exists("*vundle#rc")
 
   " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
+
+  " Snippets!  Type some text, press <tab> to expand, with get expansion with
+  " multiple placeholders you can keep or replace and tab over.
+  " Supposedly better than SnipMate which I used earlier.  Integrates with
+  " YouCompleteMe
+  Bundle 'SirVer/UltiSnips'
+
+  " Default snippet collection
+  Bundle 'honza/vim-snippets'
 
   " Smart omni-completion for Python
   "Bundle "davidhalter/jedi-vim"
@@ -396,6 +405,16 @@ if has("eval")
   " don't stomp on the <Tab> key dammit
   let g:ycm_key_list_select_completion = ['<Down>']
   let g:ycm_key_list_previous_completion = ['<Up>']
+endif
+
+" UltiSnips                                                     {{{2
+
+if has("eval")
+  " don't override ^J/^K -- I don't mind ^J, but ^K is digraphs
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  " <c-tab> doesn't work in gnome-terminal
+  let g:UltiSnipsListSnippets="<C-R><tab>"
 endif
 
 " Manual pages (:Man foo)                                       {{{2
@@ -574,6 +593,10 @@ command! CW             botright cw
 
 " :W is something I accidentally type all the time              {{{2
 command! W              w
+
+" :EditSnippets for UltiSnips                                   {{{2
+command! -nargs=? EditSnippets
+  \ exe ":e ~/.vim/UltiSnips/".(<q-args> != "" ? <q-args> : &ft != "" ? &ft : "all").".snippets"
 
 endif " has("user_commands")
 

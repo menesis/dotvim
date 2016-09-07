@@ -1,0 +1,175 @@
+snippet coding "# -*- coding: utf-8 -*-" !b
+# -*- coding: utf-8 -*-
+endsnippet
+
+snippet python3 "#! python3" !b
+#!/usr/bin/env python3
+endsnippet
+
+snippet super "Magic super()" !w
+`!p
+# Set a fallback completion first
+# snip.rv = 'super(${1:ClassName}, self).${2:method}(' <-- does not work
+snip.rv = 'super('
+import vim
+# this needs pythonhelper.vim, e.g. https://github.com/mgedmin/pythonhelper.vim
+tag = vim.eval('TagInStatusLine()')
+if tag:
+    # pythonhelper.vim's TagInStatusLine() returns '[in SomeClass.some_method (method)]'
+    # my fork of it returns '[SomeClass.some_method]'
+    # handle both
+    tag = tag.strip('[]')
+    if tag.startswith('in '):
+        tag = tag[3:]
+    tag = tag.partition(' (')[0]
+    if '.' in tag:
+        class_name, method_name = tag.split('.')[-2:]
+        snip.rv = 'super(%s, self).%s(' % (class_name, method_name)
+`$1)
+endsnippet
+
+snippet argparse "Argparse-based command-line parsing" !b
+parser = argparse.ArgumentParser(description="${1}")
+parser.add_argument('--version', action='version',
+                    version="%(prog)s version " + __version__)
+parser.add_argument('-v', '--verbose', action='store_true')
+args = parser.parse_args()
+endsnippet
+
+# in case you're stuck on Python 2.6
+snippet optparse "Optparse-based command-line parsing" !b
+parser = optparse.OptionParser('usage: %prog ${1:[options]}',
+                               description="${2}")
+parser.add_option('-v', '--verbose', action='store_true')
+opts, args = parser.parse_args()
+endsnippet
+
+snippet classifiers "PyPI classifiers" !b
+'Programming Language :: Python :: 2.6',
+'Programming Language :: Python :: 2.7',
+'Programming Language :: Python :: 3.2',
+'Programming Language :: Python :: 3.3',
+'Programming Language :: Python :: 3.4',
+${1:'Programming Language :: Python :: Implementation :: CPython',
+'Programming Language :: Python :: Implementation :: PyPy',}
+endsnippet
+
+snippet pypy-classifiers "PyPI classifiers for PyPy/CPython" !b
+'Programming Language :: Python :: Implementation :: CPython',
+'Programming Language :: Python :: Implementation :: PyPy',
+endsnippet
+
+snippet extras "Extras for setup.py"
+extras_require={$0},
+endsnippet
+
+snippet setup "setup.py" !b
+#!/usr/bin/env python
+import os
+from setuptools import setup
+
+here = os.path.dirname(__file__)
+with open(os.path.join(here, 'README.rst')) as f:
+    long_description = f.read()
+
+setup(
+    name='${1:package}',
+    version='${2:0.1}',
+    author='Marius Gedminas',
+    author_email='marius@gedmin.as',
+    url='${3:https://github.com/mgedmin/$1/}',
+    description='${5:description}',
+    long_description=long_description,
+    classifiers=[
+##      'Development Status :: 3 - Alpha',
+##      'Development Status :: 4 - Beta',
+##      'Development Status :: 5 - Production/Stable',
+##      'Environment :: Console',
+##      'Environment :: Console :: Curses',
+##      'Environment :: Web Environment',
+##      'Environment :: X11 Applications :: Gnome',
+##      'Environment :: X11 Applications :: GTK',
+##      'Intended Audience :: Developers',
+##      'License :: OSI Approved :: GNU General Public License (GPL)',
+##      'License :: OSI Approved :: MIT License',
+##      'Operating System :: POSIX',
+##      'Operating System :: OS Independent',
+##      'Programming Language :: Python',
+##      'Programming Language :: Python :: 2',
+##      'Programming Language :: Python :: 2.7',
+##      'Programming Language :: Python :: 3',
+##      'Programming Language :: Python :: 3.3',
+##      'Programming Language :: Python :: 3.4',
+##      'Programming Language :: Python :: Implementation :: CPython',
+##      'Programming Language :: Python :: Implementation :: PyPy',
+    ],
+    license='${6:licence}',
+
+    py_modules=['${7:mymodule}'],
+##  packages=['$7'],
+##  package_dir={'$7': 'src/$7'},
+##  package_data={'$7': ['*.png']},
+##  include_package_data=True,
+    zip_safe=False,
+    test_suite='${8:test_$7}',
+    install_requires=[],
+    extras_require={},
+    entry_points={
+        'console_scripts': [
+##          'script = module:function',
+        ],
+    },
+)
+endsnippet
+
+snippet testfile "Skeleton for a test file" !b
+import doctest
+
+
+${1}
+
+
+def test_suite():
+    return doctest.DocTestSuite()
+endsnippet
+
+snippet doctest "Skeleton for a doctest" !b
+def doctest_${1:fname}():
+    """Test for ${2:$1}
+
+        >>> ${3:$1}
+
+    """
+endsnippet
+
+snippet test_suite "A test_suite() function" !b
+def test_suite():
+    return unittest.TestSuite([
+        doctest.DocTestSuite(),
+        unittest.defaultTestLoader.loadTestsFromName(__name__),
+    ])
+endsnippet
+
+snippet loader "Unit test loader"
+unittest.defaultTestLoader.loadTestsFromName(${1:__name__}),
+endsnippet
+
+snippet pdb "pdb.set_trace()" !b
+import pdb; pdb.set_trace()
+endsnippet
+
+snippet ipdb "ipdb.set_trace()" !b
+import ipdb; ipdb.set_trace()
+endsnippet
+
+snippet testcase "TestCase" !b
+class Test${1:ClassName}(unittest.TestCase):
+
+    def test_${2:method}(self):
+        ${3:pass}
+endsnippet
+
+snippet ifmain "if __name__ == '__main__':" !b
+if __name__ == '__main__':
+    main()
+endsnippet
