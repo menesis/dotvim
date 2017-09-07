@@ -266,7 +266,7 @@ if exists("*vundle#rc")
   Bundle "hynek/vim-python-pep8-indent"
 
   " Automate switching between code and unit test files, bound to <C-F6>
-  Bundle "mgedmin/test-switcher.vim"
+  "Bundle "mgedmin/test-switcher.vim"
 
   " Open files by typing a subsequence of the pathname, bound to \t
   "Bundle "git://git.wincent.com/command-t.git"
@@ -293,13 +293,13 @@ if exists("*vundle#rc")
   Bundle "tpope/vim-fugitive"
 
   " Version control integration for SVN and other legacy VCSes -- :VCSVimDiff
-  Bundle "vcscommand.vim"
+  "Bundle "vcscommand.vim"
 
   " Show the svn diff while I'm editing an svn commit message.
-  Bundle "svn-diff.vim"
+  "Bundle "svn-diff.vim"
 
   " LESS (the CSS preprocessor) syntax
-  Bundle "groenewege/vim-less"
+  "Bundle "groenewege/vim-less"
 
   " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
@@ -308,10 +308,10 @@ if exists("*vundle#rc")
   " multiple placeholders you can keep or replace and tab over.
   " Supposedly better than SnipMate which I used earlier.  Integrates with
   " YouCompleteMe
-  Bundle 'SirVer/UltiSnips'
+  "Bundle 'SirVer/UltiSnips'
 
   " Default snippet collection
-  Bundle 'honza/vim-snippets'
+  "Bundle 'honza/vim-snippets'
 
   " Smart omni-completion for Python
   "Bundle "davidhalter/jedi-vim"
@@ -327,15 +327,11 @@ if exists("*vundle#rc")
   Bundle "vim-airline/vim-airline"
   Bundle "vim-airline/vim-airline-themes"
   Bundle 'edkolev/promptline.vim'
-  Bundle 'edkolev/tmuxline.vim'
 
   "Bundle "croaker/mustang-vim"
   "Bundle "baskerville/bubblegum"
   Bundle "gosukiwi/vim-atom-dark"
-  Bundle "flazz/vim-colorschemes"
-
-  Bundle "vim-scripts/utl.vim"
-  "Bundle "jceb/vim-orgmode"
+  "Bundle "flazz/vim-colorschemes"
 endif
 
 " Filetype plugins                                              {{{2
@@ -556,18 +552,18 @@ endif
 "
 " Airline                                                       {{{1
 "
-let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#close_symbol = '✕'
 
+let g:promptline_powerline_symbols = 0
 let g:promptline_preset = {
-        \'a' : [ promptline#slices#host() ],
-        \'b' : [ '$USER'],
-        \'c' : [ promptline#slices#cwd() ],
-        \'y' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
+        \'a': [ promptline#slices#user() ],
+        \'b': [ '\w' ],
+        \'c' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
         \'warn' : [ promptline#slices#last_exit_code() ]}
 
 "
