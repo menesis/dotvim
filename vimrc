@@ -268,14 +268,6 @@ if exists("*vundle#rc")
   " Automate switching between code and unit test files, bound to <C-F6>
   "Bundle "mgedmin/test-switcher.vim"
 
-  " Open files by typing a subsequence of the pathname, bound to \t
-  "Bundle "git://git.wincent.com/command-t.git"
-  " NB: Bundle doesn't install command-t completely automatically; you have
-  " to manually do this:
-  "   cd ~/.vim/bundle/command-t/ruby/command-t/ && ruby extconf.rb && make
-  " you might also need some packages installed, like build-essential and
-  " ruby1.8-dev
-
   " pure-python alternative to command-t, slightly different UI, not as nice
   " to use as command-t but useful for some circumstances.  Bound to <C-P>
   Bundle "ctrlp.vim"
