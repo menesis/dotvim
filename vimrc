@@ -51,8 +51,8 @@ set fileencodings=ucs-bom,utf-8,iso-8859-13,latin1 " autodetect
 
 " Backup files                                                  {{{2
 set backup                      " make backups
-set backupdir=~/.vim/backup     " but don't clutter $PWD with them
-set directory=~/.vim/tmp,/tmp   " list of directories for swap files
+set backupdir='~/.vim/backup'     " but don't clutter $PWD with them
+set directory='~/.vim/tmp',/tmp   " list of directories for swap files
 
 if $USER == "root"
   " 'sudo vi' on certain machines cannot write to ~/tmp (NFS root-squash)
