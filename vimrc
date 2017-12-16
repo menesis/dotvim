@@ -299,7 +299,7 @@ if exists("*vundle#rc")
   " multiple placeholders you can keep or replace and tab over.
   " Supposedly better than SnipMate which I used earlier.  Integrates with
   " YouCompleteMe
-  Bundle 'SirVer/UltiSnips'
+  "Bundle 'SirVer/UltiSnips'
 
   " Default snippet collection
   Bundle 'honza/vim-snippets'
@@ -544,19 +544,20 @@ endif
 "
 " Airline                                                       {{{1
 "
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#close_symbol = '✕'
 
+let g:promptline_powerline_symbols = 0
 let g:promptline_preset = {
-        \'a' : [ promptline#slices#host() ],
-        \'b' : [ '$USER'],
-        \'c' : [ promptline#slices#cwd() ],
-        \'y' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
+        \'a' : [ promptline#slices#user() ],
+        \'b' : [ promptline#slices#cwd() ],
+        \'c' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
         \'warn' : [ promptline#slices#last_exit_code() ]}
+let g:promptline_theme = 'airline'
 
 "
 " Commands                                                      {{{1
@@ -887,7 +888,6 @@ endf
 augroup C_prog
   autocmd!
   autocmd FileType c,cpp        call FT_C()
-  autocmd BufRead,BufNewFile /home/mg/src/brogue-*/**/*.[ch]  setlocal ts=4
 augroup END
 
 " Programming in Java                                           {{{2
