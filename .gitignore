@@ -1,6 +1,7 @@
-backup
+/backup
 tmp
 *.pyc
-bundle
-doc
-.netrwhist
+/bundle
+/doc
+/.netrwhist
+/.idea
