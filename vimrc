@@ -284,13 +284,13 @@ if exists("*vundle#rc")
   Bundle "tpope/vim-fugitive"
 
   " Version control integration for SVN and other legacy VCSes -- :VCSVimDiff
-  Bundle "vcscommand.vim"
+  "Bundle "vcscommand.vim"
 
   " Show the svn diff while I'm editing an svn commit message.
-  Bundle "svn-diff.vim"
+  "Bundle "svn-diff.vim"
 
   " LESS (the CSS preprocessor) syntax
-  Bundle "groenewege/vim-less"
+  "Bundle "groenewege/vim-less"
 
   " Replace 'ga' to show Unicode names etc.
   Bundle "tpope/vim-characterize"
@@ -302,7 +302,7 @@ if exists("*vundle#rc")
   "Bundle 'SirVer/UltiSnips'
 
   " Default snippet collection
-  Bundle 'honza/vim-snippets'
+  "Bundle 'honza/vim-snippets'
 
   " Smart omni-completion for Python
   "Bundle "davidhalter/jedi-vim"
@@ -318,12 +318,9 @@ if exists("*vundle#rc")
   Bundle "vim-airline/vim-airline"
   Bundle "vim-airline/vim-airline-themes"
   Bundle 'edkolev/promptline.vim'
-  Bundle 'edkolev/tmuxline.vim'
 
   Bundle "gosukiwi/vim-atom-dark"
-  Bundle "flazz/vim-colorschemes"
-
-  Bundle "vim-scripts/utl.vim"
+  "Bundle "flazz/vim-colorschemes"
 endif
 
 " Filetype plugins                                              {{{2
