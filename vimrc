@@ -7,13 +7,16 @@
 "
 set nocompatible                " be sane (default if you have a .vimrc)
 
+set enc=utf-8
+
 " Presentation                                                  {{{2
 set laststatus=2                " always show a status line
 set cmdheight=2                 " avoid 'Press ENTER to continue'
-set fillchars=vert:\ ,fold:⎯
 " disable pipe in vertical split borders
+set guifont=Consolas:h10
 set guioptions-=L               " disable left scrollbar in GUI
-set guioptions-=m               " disable GUI menu
+"set guioptions-=m               " disable GUI menu
+set guioptions-=T               " disable GUI toolbar
 set showcmd                     " show partial commands in status line
 set ruler                       " show cursor position in status line
 "set number                      " show line numbers
@@ -551,7 +554,7 @@ let g:airline#extensions#tabline#close_symbol = '✕'
 let g:promptline_powerline_symbols = 0
 let g:promptline_preset = {
         \'a' : [ promptline#slices#user() ],
-        \'b' : [ promptline#slices#cwd() ],
+        \'b' : [ '\w' ],
         \'c' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
         \'warn' : [ promptline#slices#last_exit_code() ]}
 let g:promptline_theme = 'airline'
