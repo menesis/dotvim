@@ -555,7 +555,7 @@ let g:promptline_powerline_symbols = 0
 let g:promptline_preset = {
         \'a' : [ promptline#slices#user() ],
         \'b' : [ '\w' ],
-        \'c' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv() ],
+        \'c' : [ promptline#slices#vcs_branch(), promptline#slices#python_virtualenv(), '${CONDA_DEFAULT_ENV%base}' ],
         \'warn' : [ promptline#slices#last_exit_code() ]}
 let g:promptline_theme = 'airline'
 

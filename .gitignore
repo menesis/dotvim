@@ -1,5 +1,6 @@
 /backup
 tmp
+*~
 *.pyc
 /bundle
 /doc
