@@ -15,7 +15,7 @@ set cmdheight=2                 " avoid 'Press ENTER to continue'
 " disable pipe in vertical split borders
 set guifont=Consolas:h10
 set guioptions-=L               " disable left scrollbar in GUI
-"set guioptions-=m               " disable GUI menu
+set guioptions-=m               " disable GUI menu
 set guioptions-=T               " disable GUI toolbar
 set showcmd                     " show partial commands in status line
 set ruler                       " show cursor position in status line
