@@ -13,7 +13,8 @@ set enc=utf-8
 set laststatus=2                " always show a status line
 set cmdheight=2                 " avoid 'Press ENTER to continue'
 " disable pipe in vertical split borders
-set guifont=Consolas:h10
+"set guifont=Consolas:h10
+set guifont=Source\ Code\ Pro\ for\ Powerline:h10
 set guioptions-=L               " disable left scrollbar in GUI
 set guioptions-=m               " disable GUI menu
 set guioptions-=T               " disable GUI toolbar
@@ -544,14 +545,14 @@ endif
 "
 " Airline                                                       {{{1
 "
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tabline#close_symbol = '✕'
 
-let g:promptline_powerline_symbols = 0
+let g:promptline_powerline_symbols = 1
 let g:promptline_preset = {
         \'a' : [ promptline#slices#user() ],
         \'b' : [ '\w' ],
