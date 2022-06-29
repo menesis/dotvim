@@ -313,6 +313,7 @@ if exists("*vundle#rc")
 
   Bundle "tpope/vim-surround"
   Bundle "rhysd/clever-f.vim"
+  Bundle "tomtom/tcomment_vim"
 
   Bundle "majutsushi/tagbar"
   Bundle "scrooloose/nerdtree"
@@ -567,7 +568,8 @@ let g:promptline_theme = 'airline'
 if has("user_commands")
 
 " like :Explore, only never split windows                       {{{2
-command! E :e %:p:~:.:h
+" workaround for https://github.com/vim/vim/issues/1506
+command! -nargs=* -complete=file E exec "e" (<q-args> != "" ? <q-args> : curdir#get())
 
 " how many occurrences of the current search pattern?           {{{2
 command! CountMatches                   %s///n
