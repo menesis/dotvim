@@ -257,11 +257,8 @@ if exists("*vundle#rc")
   " search for new ones with :BundleSearch keyword
   " bundles are kept in ~/.vim/bundle/
 
-  " Show [current_function] in the status line for C files
-  "Bundle "mgedmin/chelper.vim"
-
-  " Show [CurrentClass.current_method] in the status line for Python files
-  Bundle "mgedmin/pythonhelper.vim"
+  " Showthe name of the current tag (usually function) in the status line
+  "Bundle "mgedmin/taghelper.vim"
 
   " Automate 'from X import Y' statements from ctags, bound to <F5>
   Bundle "mgedmin/python-imports.vim"
@@ -273,16 +270,17 @@ if exists("*vundle#rc")
   Bundle "mgedmin/test-switcher.vim"
 
   " Open files by typing a subsequence of the pathname.  Bound to <C-P>
-  Bundle "ctrlp.vim"
+  Bundle "vim-scripts/ctrlp.vim"
 
   " Show syntax errors and style warnings in files I edit.  Updates on save.
   Bundle "scrooloose/syntastic"
 
   " Show ASCII-art representation of Vim's undo tree, with bonus unified diffs
-  Bundle "Gundo"
+  Bundle "sjl/gundo.vim"
+  let g:gundo_prefer_python3 = has('python3')  " Unbreak broken default config
 
   " Defines the very useful :Rename newfilename.txt
-  Bundle "Rename"
+  Bundle "vim-scripts/Rename"
 
   " Git integration -- :Gdiff, :Ggrep etc.
   Bundle "tpope/vim-fugitive"
@@ -316,7 +314,7 @@ if exists("*vundle#rc")
   Bundle "tomtom/tcomment_vim"
 
   Bundle "majutsushi/tagbar"
-  Bundle "scrooloose/nerdtree"
+  Bundle "preservim/nerdtree"
 
   Bundle "airblade/vim-gitgutter"
 
