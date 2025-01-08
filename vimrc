@@ -14,8 +14,9 @@ set laststatus=2                " always show a status line
 set cmdheight=2                 " avoid 'Press ENTER to continue'
 " disable pipe in vertical split borders
 "set guifont=Consolas:h10
-set guifont=Source\ Code\ Pro\ for\ Powerline:h10
+set guifont=Source\ Code\ Pro:h10
 set guioptions-=L               " disable left scrollbar in GUI
+set guioptions-=r               " disable right scrollbar in GUI
 set guioptions-=m               " disable GUI menu
 set guioptions-=T               " disable GUI toolbar
 set showcmd                     " show partial commands in status line
@@ -66,14 +67,6 @@ endif
 if !isdirectory(&backupdir)
   " create the backup directory if it doesn't already exist
   exec "silent !mkdir -p " . &backupdir
-endif
-
-" Avoiding excessive I/O                                        {{{2
-set swapsync=                   " be more friendly to laptop mode (dangerous)
-                                " this could result in data loss, so beware!
-if v:version >= 700
-  set nofsync                   " be more friendly to laptop mode (dangerous)
-                                " this could result in data loss, so beware!
 endif
 
 " Behaviour                                                     {{{2
@@ -1155,7 +1148,7 @@ if $COLORTERM == "gnome-terminal"
   " added to .bashrc
 endif
 
-if has("gui_running")
+if has("gui_running") && !has("nvim")
   gui                           " see :help 'background' why I need this before
   set t_vb=                     " this must be set after :gui
 endif
